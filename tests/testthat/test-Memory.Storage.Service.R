@@ -186,7 +186,10 @@ describe("When entity |> service[['Insert']](table)",{
       Memory.Storage.Broker() |> 
       Memory.Storage.Service()
 
-    table <- list()
+    table <- 'Todo'
+    Todo.Mock.Data |> service[['Seed']](table)
+
+    table <- 1
 
     new.entity <- data.frame(
       Id     = uuid::UUIDgenerate(),

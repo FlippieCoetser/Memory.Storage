@@ -22,7 +22,7 @@ Memory.Storage.Service <- \(broker) {
     data  |> validate[['Data']]()
     table |> validate[['Table']]()
 
-    data |> broker[['Seed']](table)
+    data  |> broker[['Seed']](table)
   }
   services[['ExecuteQuery']]  <- \(...) {
     TRUE |> validate[['NoImplementation']]()
@@ -31,10 +31,10 @@ Memory.Storage.Service <- \(broker) {
   services[['Insert']]        <- \(entity, table) {
     entity |> validate[['Entity']]()
     table  |> validate[['Table']]()
-
-    table  |> validate[['TableExist']]()
+    
     entity |> validate[['IsNewEntity']](table)
-
+    table  |> validate[['TableExist']]()
+    
     entity |> broker[['Insert']](table)
   }
   services[['Select']]        <- \(table, fields) {
@@ -56,7 +56,7 @@ Memory.Storage.Service <- \(broker) {
     entity |> validate[['Entity']]()
     table  |> validate[['Table']]()
 
-    table |> validate[['TableExist']]()
+    table  |> validate[['TableExist']]()
 
     entity |> validate[['EntityExist']](table)
     entity |> broker[['Update']](table)
@@ -67,7 +67,7 @@ Memory.Storage.Service <- \(broker) {
 
     table |> validate[['TableExist']]()
     
-    id |> broker[['Delete']](table)
+    id    |> broker[['Delete']](table)
   }
   return(services)
 }
