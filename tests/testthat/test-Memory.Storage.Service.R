@@ -373,6 +373,24 @@ describe("when id |> service[['Delete']](table)",{
     # Then
     id |> broker[['SelectWhereId']](table, fields) |> expect.rows(expected.rows)
   })
+  it("then an exception is thrown if id is invalid",{
+    # Given
+    configuration <- data.frame()
+
+    service <- configuration  |> 
+      Memory.Storage.Broker() |> 
+      Memory.Storage.Service()
+
+    table <- 'Todo'
+    Todo.Mock.Data |> service[['Seed']](table)
+
+    invalid.id <- 'InvalidId'
+
+    expected.error <- "Memory Storage Provider Error: Invalid Unique Identifier."
+
+    # Then
+    invalid.id |> service[['Delete']](table) |> expect.error(expected.error)
+  })
   it("then an exception is thrown if table is invalid",{
     # Given
     configuration <- data.frame()
