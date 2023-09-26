@@ -12,6 +12,13 @@ describe("When exceptions <- Memory.Storage.Exception()",{
     # Then
     exceptions |> expect.list()
   })
+  it('then exceptions contains InvalidDataType Exception',{
+   # When
+   exceptions <- Memory.Storage.Exceptions()
+   
+   # Then
+   exceptions[['InvalidDataType']] |> expect.exist()
+  })
   it('then exceptions contains NoExecuteQuery exception',{
    # When
    exceptions <- Memory.Storage.Exceptions()
