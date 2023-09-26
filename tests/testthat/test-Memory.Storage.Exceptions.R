@@ -56,6 +56,33 @@ describe("When exceptions <- Memory.Storage.Exception()",{
   })
 })
 
+describe("When input |> exception[['InvalidDataType']]()", {
+  it("then no exception is thrown if input is FALSE", {
+    # Given
+    exception <- Memory.Storage.Exceptions()
+    
+    # When
+    input <- FALSE
+    
+    # Then
+    input |> exception[['InvalidDataType']]() |> expect.no.error()
+  })
+  it("then an exception is thrown if input is TRUE", {
+    # Given
+    exception <- Memory.Storage.Exceptions()
+
+    field <- 'field'
+    type  <- 'type'
+    
+    expected.error <- "Memory Storage Provider Error: field is not a type."
+    # When
+    input <- TRUE
+    
+    # Then
+    input |> exception[['InvalidDataType']](field, type) |> expect.error(expected.error)
+  })
+})
+
 describe("When input |> exception[['NoExecuteQuery']]()", {
   it("then no exception is thrown if input is FALSE", {
     # Given
