@@ -20,6 +20,10 @@ Memory.Storage.Exceptions <- \() {
       stop('Memory Storage Provider Error: ', table, ' is not a valid table.', call. = FALSE)
     }
   }
-  exceptions[['InvalidIdentifier']] <- \() {}
+  exceptions[['InvalidIdentifier']] <- \(invoke) {
+    if(invoke) {
+      stop('Memory Storage Provider Error: Invalid Unique Identifier.', call. = FALSE)
+    }
+  }
   return(exceptions)
 }
