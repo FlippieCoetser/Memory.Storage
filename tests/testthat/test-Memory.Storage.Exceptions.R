@@ -83,7 +83,7 @@ describe("When input |> exception[['InvalidDataType']]()", {
   })
 })
 
-describe("When input |> exception[['NoExecuteQuery']]()", {
+describe("When input |> exception[['NoExecuteQuery']](field, type)", {
   it("then no exception is thrown if input is FALSE", {
     # Given
     exception <- Memory.Storage.Exceptions()
