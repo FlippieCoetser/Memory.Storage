@@ -13,7 +13,7 @@ Memory.Storage.Validator <- \(broker = NULL) {
   }
   validators[['Id']]               <- \(id) {
     id |> validators[['Identifier']]()
-   }
+  }
   validators[['NoImplementation']] <- \(throw) {
     throw |> exception[['NoExecuteQuery']]()
   }
