@@ -33,12 +33,12 @@ describe("When validators <- Memory.Storage.Validator()",{
    # Then
    validators[['EntityExist']] |> expect.exist()
   })
-  it('then validators contains UniqueIdentifier validator',{
+  it('then validators contains Identifier validator',{
    # When
    validators <- Memory.Storage.Validator()
    
    # Then
-   validators[['UniqueIdentifier']] |> expect.exist()
+   validators[['Identifier']] |> expect.exist()
   })
 })
 
@@ -139,7 +139,7 @@ describe("When table |> validate[['IsValidTable']]()",{
   })
 })
 
-describe("When id |> validate[['UniqueIdentifier']]()",{
+describe("When id |> validate[['Identifier']]()",{
   it('then no exception is thrown if id is a valid unique identifier',{
     # Given
     configuration <- data.frame()
@@ -150,7 +150,7 @@ describe("When id |> validate[['UniqueIdentifier']]()",{
     valid.id <- uuid::UUIDgenerate()
     
     # Then
-    valid.id |> validator[['UniqueIdentifier']]() |> expect.no.error()
+    valid.id |> validator[['Identifier']]() |> expect.no.error()
   })
   it('then an exception is thrown if id is an invalid identifier',{
     # Given
@@ -164,6 +164,6 @@ describe("When id |> validate[['UniqueIdentifier']]()",{
     expected.error <- 'Memory Storage Provider Error: Invalid Unique Identifier.'
     
     # Then
-    invalid.id |> validator[['UniqueIdentifier']]() |> expect.error(expected.error)
+    invalid.id |> validator[['Identifier']]() |> expect.error(expected.error)
   })
 })
