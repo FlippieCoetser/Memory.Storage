@@ -20,6 +20,7 @@ Memory.Storage.Service <- \(broker) {
   services <- list()
   services[['Seed']]          <- \(data, table) {
     data  |> validate[['Data']]()
+    table |> validate[['Table']]()
 
     data |> broker[['Seed']](table)
   }
