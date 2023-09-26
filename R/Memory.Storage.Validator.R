@@ -5,7 +5,9 @@ Memory.Storage.Validator <- \(broker = NULL) {
   validators[['Entity']]           <- \(entity) {
     entity |> is.data.frame() |> isFALSE() |> exception[['InvalidDataType']]('entity', 'data.frame')
   }
-  validators[['Table']]            <- \() {}
+  validators[['Table']]            <- \(table) {
+    table |> is.character() |> isFALSE() |> exception[['InvalidDataType']]('table', 'character')
+  }
   validators[['NoImplementation']] <- \(throw) {
     throw |> exception[['NoExecuteQuery']]()
   }
