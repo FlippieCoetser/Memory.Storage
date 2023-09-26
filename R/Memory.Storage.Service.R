@@ -36,6 +36,8 @@ Memory.Storage.Service <- \(broker) {
     table |> broker[['Select']](fields)
   }
   services[['SelectWhereId']] <- \(id, table, fields) {
+    id |> validate[['Identifier']]()
+    
     table |> validate[['IsValidTable']]()
 
     id |> broker[['SelectWhereId']](table, fields)
