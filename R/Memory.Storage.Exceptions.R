@@ -1,6 +1,10 @@
 Memory.Storage.Exceptions <- \() {
   exceptions <- list()
-  exceptions[['InvalidDataType']]   <- \() {}
+  exceptions[['InvalidDataType']]   <- \(invoke, field, type) {
+    if(invoke) {
+      stop('Memory Storage Provider Error: ', field, ' is not a ', type, '.', call. = FALSE)
+    }
+  }
   exceptions[['NoExecuteQuery']]    <- \(invoke) {
     if(invoke) {
       stop('Memory Storage Provider Error: ExecuteQuery not implemented.', call. = FALSE)
