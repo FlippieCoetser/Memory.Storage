@@ -12,6 +12,13 @@ describe("When validators <- Memory.Storage.Validator()",{
     # Then
     validators |> expect.list()
   })
+  it('then validators contains Data validator',{
+   # When
+   validators <- Memory.Storage.Validator()
+   
+   # Then
+   validators[['Data']] |> expect.exist()
+  })
   it('then validators contains Entity validator',{
    # When
    validators <- Memory.Storage.Validator()
