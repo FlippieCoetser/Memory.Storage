@@ -34,11 +34,14 @@ Memory.Storage.Service <- \(broker) {
 
     table |> validate[['IsValidTable']]()
     entity |> validate[['IsNewEntity']](table)
-    
+
     entity |> broker[['Insert']](table)
   }
   services[['Select']]        <- \(table, fields) {
+    table |> validate[['Table']]()
+
     table |> validate[['IsValidTable']]()
+    
     table |> broker[['Select']](fields)
   }
   services[['SelectWhereId']] <- \(id, table, fields) {
