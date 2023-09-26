@@ -333,6 +333,26 @@ describe("When id |> service[['SelectWhereId']](table, fields)",{
     # Then
     invalid.id |> service[['SelectWhereId']](table, fields) |> expect.error(expected.error)
   })
+  it("then an exception is thrown if table is not character type",{
+    # Given
+    broker  <- configuration |> Memory.Storage.Broker()
+    service <- broker        |> Memory.Storage.Service()
+
+    table <- 'Todo'
+    Todo.Mock.Data |> service[['Seed']](table)
+
+    existing.entity <- Todo.Mock.Data |> tail(1)
+    expected.entity <- existing.entity
+
+    id <- existing.entity[['Id']]
+
+    table <- list()
+
+    expected.error <- "Memory Storage Provider Error: table is not a character."
+
+    # Then
+    id |> service[['SelectWhereId']](table, fields) |> expect.error(expected.error)
+  })
   it("then an exception is thrown if table is invalid",{
     # Given
     configuration <- data.frame()
