@@ -20,7 +20,8 @@ Memory.Storage.Broker <- \(configuration = NULL) {
     data[[table]]
   }
   operations[['SelectWhereId']]    <- \(id, table, fields = NULL) {
-    data[[table]][data[[table]][['Id']] == id,]
+    condition <- data[[table]][['Id']] == id
+    data[[table]][condition,]
   }
   operations[['Update']]           <- \(entity, table) {
     condition <- data[[table]][['Id']] == entity[['Id']]
