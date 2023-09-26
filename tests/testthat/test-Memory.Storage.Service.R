@@ -423,6 +423,27 @@ describe("When entity |> service[['Update']](table)",{
     # Then
     new.entity |> service[['Update']](table) |> expect.error(expected.error)
   })
+  it("then an exception is thrown if table is not a character type",{
+    # Given
+    configuration <- data.frame()
+
+    service <- configuration  |> 
+      Memory.Storage.Broker() |> 
+      Memory.Storage.Service()
+
+    table <- list()
+
+    new.entity <- data.frame(
+      Id     = uuid::UUIDgenerate(),
+      Task   = 'Task',
+      Status = 'New'
+    )
+
+    expected.error <- "Memory Storage Provider Error: table is not a character."
+
+    # Then
+    new.entity |> service[['Update']](table) |> expect.error(expected.error)
+  })
   it("then an exception is thrown if entity does not exist",{
     # Given
     configuration <- data.frame()
