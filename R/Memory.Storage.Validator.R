@@ -22,5 +22,6 @@ Memory.Storage.Validator <- \(broker = NULL) {
       exception[['InvalidTable']](table)
     return(table)
   }
+  validators[['UniqueIdentifier']] <- \() {}
   return(validators)
 }
