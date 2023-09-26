@@ -98,6 +98,23 @@ describe("when entities |> service[['Seed']](table)",{
     # Then
     seed.entities |> service[['Seed']](table) |> expect.error(expected.error)
   })
+  it("then an exception is thrown if table is not a character type",{
+    # Given
+    configuration <- data.frame()
+
+    service <- configuration |> 
+      Memory.Storage.Broker() |> 
+      Memory.Storage.Service()
+
+    table <- list()
+
+    seed.entities <- Todo.Mock.Data
+
+    expected.error <- "Memory Storage Provider Error: table is not a character."
+
+    # Then
+    seed.entities |> service[['Seed']](table) |> expect.error(expected.error)
+  })
 })
 
 describe("When query |> services[['ExecuteQuery']]()",{
