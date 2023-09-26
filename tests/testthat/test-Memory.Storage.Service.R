@@ -260,6 +260,21 @@ describe("When table |> service[['Select']](fields)",{
     # Then
     actual.entities |> expect.equal.data(expected.entities)
   })
+  it("then an exception is thrown if table is not a character type",{
+    # Given
+    configuration <- data.frame()
+
+    service <- configuration  |> 
+      Memory.Storage.Broker() |> 
+      Memory.Storage.Service()
+
+    table <- list()
+
+    expected.error <- "Memory Storage Provider Error: table is not a character."
+
+    # Then
+    table |> service[['Select']](fields) |> expect.error(expected.error)
+  })
   it("then an exception is thrown if table is invalid",{
     # Given
     configuration <- data.frame()
