@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(R.Template)
+library(Memory.Storage)
 
-test_check("R.Template")
+test_check("Memory.Storage")

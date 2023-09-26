@@ -1,5 +1,5 @@
-Package: R.Template
-Title: Package Tile
+Package: Memory.Storage
+Title: Memory Storage Provider for Storage Package
 Version: 0.0.1.0000
 Authors@R: 
     person(given = "Flippie",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "Flippie.Coetser@gmail.com",
            comment = c(ORCID = "0000-0003-0549-9245"))
-Description: Packge Description.
+Description: Provide a common interface to perform standard data operations on an in-memory data store. This package is a plugin for the Storage Package.
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true
