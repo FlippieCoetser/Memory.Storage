@@ -33,6 +33,13 @@ describe("When validators <- Memory.Storage.Validator()",{
    # Then
    validators[['EntityExist']] |> expect.exist()
   })
+  it('then validators contains UniqueIdentifier validator',{
+   # When
+   validators <- Memory.Storage.Validator()
+   
+   # Then
+   validators[['UniqueIdentifier']] |> expect.exist()
+  })
 })
 
 describe("When throw |> validate[['NoImplementation']]()",{
