@@ -81,6 +81,23 @@ describe("when entities |> service[['Seed']](table)",{
     actual.entities <- table |> broker[['Select']]()
     actual.entities |> expect.equal.data(expected.entities)
   })
+  it("then an exception if thrown if entities is not a data frame",{
+    # Given
+    configuration <- data.frame()
+
+    service <- configuration |> 
+      Memory.Storage.Broker() |> 
+      Memory.Storage.Service()
+
+    table <- 'Todo'
+
+    seed.entities <- list()
+
+    expected.error <- "Memory Storage Provider Error: data is not a data.frame."
+
+    # Then
+    seed.entities |> service[['Seed']](table) |> expect.error(expected.error)
+  })
 })
 
 describe("When query |> services[['ExecuteQuery']]()",{
