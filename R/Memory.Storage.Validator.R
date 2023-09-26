@@ -22,6 +22,9 @@ Memory.Storage.Validator <- \(broker = NULL) {
       exception[['InvalidTable']](table)
     return(table)
   }
-  validators[['UniqueIdentifier']] <- \() {}
+  validators[['UniqueIdentifier']] <- \(id) {
+    pattern <- "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    pattern |> grepl(id) |> isFALSE() |> exception[['InvalidIdentifier']]()
+  }
   return(validators)
 }
