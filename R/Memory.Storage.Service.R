@@ -53,6 +53,8 @@ Memory.Storage.Service <- \(broker) {
     id |> broker[['SelectWhereId']](table, fields)
   }
   services[['Update']]        <- \(entity, table) {
+    entity |> validate[['Entity']]()
+
     table |> validate[['IsValidTable']]()
 
     entity |> validate[['EntityExist']](table)
