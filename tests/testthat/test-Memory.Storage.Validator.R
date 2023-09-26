@@ -35,15 +35,17 @@ describe("When validators <- Memory.Storage.Validator()",{
   })
 })
 
-describe("When validate[['NoImplementation']]()",{
-  it("then an exceptions is thrown",{
+describe("When throw |> validate[['NoImplementation']]()",{
+  it("then an exceptions is thrown if throw is TRUE",{
     # Given
     validators <- Memory.Storage.Validator()
+
+    throw <- TRUE
     
     expected.error <- 'Memory Storage Provider Error: ExecuteQuery not implemented.'
     
     # When
-    validators[['NoImplementation']]() |> expect.error(expected.error)
+    throw |> validators[['NoImplementation']]() |> expect.error(expected.error)
   })
 })
 
