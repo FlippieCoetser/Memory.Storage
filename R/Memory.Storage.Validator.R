@@ -27,7 +27,7 @@ Memory.Storage.Validator <- \(broker = NULL) {
     (match.count == 0) |> exception[['EntityNotFound']]()
     return(entity)
   }
-  validators[['IsValidTable']]     <- \(table) {
+  validators[['TableExist']]     <- \(table) {
     broker[['GetTableNames']]() |> 
       is.element(table)         |> 
       isFALSE()                 |> 

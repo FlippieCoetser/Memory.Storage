@@ -228,7 +228,7 @@ describe("When entity |> validate[['EntityExist']](table)",{
   })  
 })
 
-describe("When table |> validate[['IsValidTable']]()",{
+describe("When table |> validate[['TableExist']]()",{
   it("then no exception is thrown if table is a valid table",{
     # Given
     configuration <- data.frame()
@@ -243,7 +243,7 @@ describe("When table |> validate[['IsValidTable']]()",{
     valid.table <- table
     
     # Then
-    valid.table |> validator[['IsValidTable']]() |> expect.no.error()
+    valid.table |> validator[['TableExist']]() |> expect.no.error()
   })
   it("then an exception is thrown if table is not a valid table",{
     # Given
@@ -261,7 +261,7 @@ describe("When table |> validate[['IsValidTable']]()",{
     expected.error <- 'Memory Storage Provider Error: InvalidTable is not a valid table.'
     
     # Then
-    invalid.table |> validator[['IsValidTable']]() |> expect.error(expected.error)
+    invalid.table |> validator[['TableExist']]() |> expect.error(expected.error)
   })
 })
 
