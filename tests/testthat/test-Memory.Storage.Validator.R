@@ -79,6 +79,29 @@ describe("When entity |> validate[['Entity']]()",{
   })
 })
 
+describe("When table |> validate[['Table']]()",{
+  it('then no exception is thrown if table is a character',{
+    # Given
+    validators <- Memory.Storage.Validator()
+
+    table <- 'Todo'
+    
+    # When
+    table |> validators[['Table']]() |> expect.no.error()
+  })
+  it('then an exception is thrown if table is not a character',{
+    # Given
+    validators <- Memory.Storage.Validator()
+
+    table <- 1
+    
+    expected.error <- 'Memory Storage Provider Error: table is not a character.'
+    
+    # When
+    table |> validators[['Table']]() |> expect.error(expected.error)
+  })
+})
+
 describe("When throw |> validate[['NoImplementation']]()",{
   it("then an exceptions is thrown if throw is TRUE",{
     # Given
