@@ -54,6 +54,7 @@ Memory.Storage.Service <- \(broker) {
   }
   services[['Update']]        <- \(entity, table) {
     entity |> validate[['Entity']]()
+    table  |> validate[['Table']]()
 
     table |> validate[['IsValidTable']]()
 
