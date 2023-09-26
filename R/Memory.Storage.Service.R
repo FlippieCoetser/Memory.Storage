@@ -32,7 +32,7 @@ Memory.Storage.Service <- \(broker) {
     entity |> validate[['Entity']]()
     table  |> validate[['Table']]()
 
-    table |> validate[['IsValidTable']]()
+    table  |> validate[['IsValidTable']]()
     entity |> validate[['IsNewEntity']](table)
 
     entity |> broker[['Insert']](table)
