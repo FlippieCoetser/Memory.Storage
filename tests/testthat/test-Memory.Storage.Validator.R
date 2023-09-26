@@ -139,6 +139,35 @@ describe("When table |> validate[['Table']]()",{
   })
 })
 
+describe("When id |> validate[['Id']]()",{
+  it('then no exception is thrown if id is a valid unique identifier',{
+    # Given
+    configuration <- data.frame()
+
+    broker <- configuration |> Memory.Storage.Broker()
+    validator <- broker |> Memory.Storage.Validator()
+
+    valid.id <- uuid::UUIDgenerate()
+    
+    # Then
+    valid.id |> validator[['Id']]() |> expect.no.error()
+  })
+  it('then an exception is thrown if id is an invalid identifier',{
+    # Given
+    configuration <- data.frame()
+
+    broker <- configuration |> Memory.Storage.Broker()
+    validator <- broker |> Memory.Storage.Validator()
+
+    invalid.id <- 'InvalidIdentifier'
+    
+    expected.error <- 'Memory Storage Provider Error: Invalid Unique Identifier.'
+    
+    # Then
+    invalid.id |> validator[['Id']]() |> expect.error(expected.error)
+  })
+})
+
 describe("When throw |> validate[['NoImplementation']]()",{
   it("then an exceptions is thrown if throw is TRUE",{
     # Given
