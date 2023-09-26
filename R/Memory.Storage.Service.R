@@ -50,7 +50,7 @@ Memory.Storage.Service <- \(broker) {
   }
   services[['Delete']]        <- \(id, table) {
     id |> validate[['Identifier']]()
-    
+
     table |> validate[['IsValidTable']]()
     
     id |> broker[['Delete']](table)
