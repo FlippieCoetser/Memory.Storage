@@ -56,6 +56,29 @@ describe("When validators <- Memory.Storage.Validator()",{
   })
 })
 
+describe("When entity |> validate[['Entity']]()",{
+  it("then no exception is thrown if entity is a data.frame",{
+    # Given
+    validators <- Memory.Storage.Validator()
+
+    entity <- data.frame()
+    
+    # When
+    entity |> validators[['Entity']]() |> expect.no.error()
+  })
+  it("then an exception is thrown if entity is not a data.frame",{
+    # Given
+    validators <- Memory.Storage.Validator()
+
+    entity <- list()
+    
+    expected.error <- 'Memory Storage Provider Error: entity is not a data.frame.'
+    
+    # When
+    entity |> validators[['Entity']]() |> expect.error(expected.error)
+  })
+})
+
 describe("When throw |> validate[['NoImplementation']]()",{
   it("then an exceptions is thrown if throw is TRUE",{
     # Given
