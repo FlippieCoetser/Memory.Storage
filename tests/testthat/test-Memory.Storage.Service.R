@@ -406,6 +406,23 @@ describe("When entity |> service[['Update']](table)",{
     actual.entity <- id |> broker[['SelectWhereId']](table, fields)
     actual.entity |> expect.equal.data(expected.entity)
   })
+  it("then an exception is thrown if entity is not a data.frame",{
+    # Given
+    configuration <- data.frame()
+
+    service <- configuration  |> 
+      Memory.Storage.Broker() |> 
+      Memory.Storage.Service()
+
+    table <- 'Todo'
+
+    new.entity <- list()
+
+    expected.error <- "Memory Storage Provider Error: entity is not a data.frame."
+
+    # Then
+    new.entity |> service[['Update']](table) |> expect.error(expected.error)
+  })
   it("then an exception is thrown if entity does not exist",{
     # Given
     configuration <- data.frame()
