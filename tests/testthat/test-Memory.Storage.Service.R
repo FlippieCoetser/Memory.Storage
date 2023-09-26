@@ -536,6 +536,25 @@ describe("when id |> service[['Delete']](table)",{
     # Then
     invalid.id |> service[['Delete']](table) |> expect.error(expected.error)
   })
+  it("then an exception is thrown if table is not a character type",{
+    # Given
+    broker  <- configuration |> Memory.Storage.Broker()
+    service <- broker        |> Memory.Storage.Service()
+
+    table <- 'Todo'
+    Todo.Mock.Data |> service[['Seed']](table)
+
+    entity <- Todo.Mock.Data |> tail(1)
+    id     <- entity[['Id']]
+
+    table <- list()
+
+    expected.error <- "Memory Storage Provider Error: table is not a character."
+
+    # Then
+    id |> service[['Delete']](table) |> expect.error(expected.error)
+
+  })
   it("then an exception is thrown if table is invalid",{
     # Given
     configuration <- data.frame()
