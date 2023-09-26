@@ -2,7 +2,9 @@ Memory.Storage.Validator <- \(broker = NULL) {
   exception <- Memory.Storage.Exceptions()
 
   validators <- list()
-  validators[['Data']]             <- \() {}
+  validators[['Data']]             <- \(data) {
+    data |> is.data.frame() |> isFALSE() |> exception[['InvalidDataType']]('data', 'data.frame')
+  }
   validators[['Entity']]           <- \(entity) {
     entity |> is.data.frame() |> isFALSE() |> exception[['InvalidDataType']]('entity', 'data.frame')
   }
