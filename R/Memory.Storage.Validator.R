@@ -11,7 +11,9 @@ Memory.Storage.Validator <- \(broker = NULL) {
   validators[['Table']]            <- \(table) {
     table |> is.character() |> isFALSE() |> exception[['InvalidDataType']]('table', 'character')
   }
-  validators[['Id']]               <- \() { }
+  validators[['Id']]               <- \(id) {
+    id |> validators[['Identifier']]()
+   }
   validators[['NoImplementation']] <- \(throw) {
     throw |> exception[['NoExecuteQuery']]()
   }
