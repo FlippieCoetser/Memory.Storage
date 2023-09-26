@@ -12,6 +12,34 @@ describe("When validators <- Memory.Storage.Validator()",{
     # Then
     validators |> expect.list()
   })
+  it('then validators contains Data validator',{
+   # When
+   validators <- Memory.Storage.Validator()
+   
+   # Then
+   validators[['Data']] |> expect.exist()
+  })
+  it('then validators contains Entity validator',{
+   # When
+   validators <- Memory.Storage.Validator()
+   
+   # Then
+   validators[['Entity']] |> expect.exist()
+  })
+  it('then validators contains Table validator',{
+   # When
+   validators <- Memory.Storage.Validator()
+   
+   # Then
+   validators[['Table']] |> expect.exist()
+  })
+  it('then validators contains Id validator',{
+   # When
+   validators <- Memory.Storage.Validator()
+   
+   # Then
+   validators[['Id']] |> expect.exist()
+  })
   it('then validators contains NoImplementation validator',{
    # When
    validators <- Memory.Storage.Validator()
@@ -33,17 +61,124 @@ describe("When validators <- Memory.Storage.Validator()",{
    # Then
    validators[['EntityExist']] |> expect.exist()
   })
+  it('then validators contains Identifier validator',{
+   # When
+   validators <- Memory.Storage.Validator()
+   
+   # Then
+   validators[['Identifier']] |> expect.exist()
+  })
 })
 
-describe("When validate[['NoImplementation']]()",{
-  it("then an exceptions is thrown",{
+describe("When data |> validate[['Data']]()",{
+  it('then no exception is thrown if data is a data.frame',{
     # Given
     validators <- Memory.Storage.Validator()
+
+    data <- data.frame()
+    
+    # When
+    data |> validators[['Data']]() |> expect.no.error()
+  })
+  it('then an exception is thrown if data is not a data.frame',{
+    # Given
+    validators <- Memory.Storage.Validator()
+
+    data <- list()
+    
+    expected.error <- 'Memory Storage Provider Error: data is not a data.frame.'
+    
+    # When
+    data |> validators[['Data']]() |> expect.error(expected.error)
+  })
+})
+
+describe("When entity |> validate[['Entity']]()",{
+  it("then no exception is thrown if entity is a data.frame",{
+    # Given
+    validators <- Memory.Storage.Validator()
+
+    entity <- data.frame()
+    
+    # When
+    entity |> validators[['Entity']]() |> expect.no.error()
+  })
+  it("then an exception is thrown if entity is not a data.frame",{
+    # Given
+    validators <- Memory.Storage.Validator()
+
+    entity <- list()
+    
+    expected.error <- 'Memory Storage Provider Error: entity is not a data.frame.'
+    
+    # When
+    entity |> validators[['Entity']]() |> expect.error(expected.error)
+  })
+})
+
+describe("When table |> validate[['Table']]()",{
+  it('then no exception is thrown if table is a character',{
+    # Given
+    validators <- Memory.Storage.Validator()
+
+    table <- 'Todo'
+    
+    # When
+    table |> validators[['Table']]() |> expect.no.error()
+  })
+  it('then an exception is thrown if table is not a character',{
+    # Given
+    validators <- Memory.Storage.Validator()
+
+    table <- 1
+    
+    expected.error <- 'Memory Storage Provider Error: table is not a character.'
+    
+    # When
+    table |> validators[['Table']]() |> expect.error(expected.error)
+  })
+})
+
+describe("When id |> validate[['Id']]()",{
+  it('then no exception is thrown if id is a valid unique identifier',{
+    # Given
+    configuration <- data.frame()
+
+    broker <- configuration |> Memory.Storage.Broker()
+    validator <- broker |> Memory.Storage.Validator()
+
+    valid.id <- uuid::UUIDgenerate()
+    
+    # Then
+    valid.id |> validator[['Id']]() |> expect.no.error()
+  })
+  it('then an exception is thrown if id is an invalid identifier',{
+    # Given
+    configuration <- data.frame()
+
+    broker <- configuration |> Memory.Storage.Broker()
+    validator <- broker |> Memory.Storage.Validator()
+
+    invalid.id <- 'InvalidIdentifier'
+    
+    expected.error <- 'Memory Storage Provider Error: Invalid Unique Identifier.'
+    
+    # Then
+    invalid.id |> validator[['Id']]() |> expect.error(expected.error)
+  })
+})
+
+describe("When throw |> validate[['NoImplementation']]()",{
+  it("then an exceptions is thrown if throw is TRUE",{
+    # Given
+    validators <- Memory.Storage.Validator()
+
+    throw <- TRUE
     
     expected.error <- 'Memory Storage Provider Error: ExecuteQuery not implemented.'
     
     # When
-    validators[['NoImplementation']]() |> expect.error(expected.error)
+    throw |> validators[['NoImplementation']]() |> expect.error(expected.error)
   })
 })
 
@@ -93,7 +228,7 @@ describe("When entity |> validate[['EntityExist']](table)",{
   })  
 })
 
-describe("When table |> validate[['IsValidTable']]()",{
+describe("When table |> validate[['TableExist']]()",{
   it("then no exception is thrown if table is a valid table",{
     # Given
     configuration <- data.frame()
@@ -108,7 +243,7 @@ describe("When table |> validate[['IsValidTable']]()",{
     valid.table <- table
     
     # Then
-    valid.table |> validator[['IsValidTable']]() |> expect.no.error()
+    valid.table |> validator[['TableExist']]() |> expect.no.error()
   })
   it("then an exception is thrown if table is not a valid table",{
     # Given
@@ -126,6 +261,35 @@ describe("When table |> validate[['IsValidTable']]()",{
     expected.error <- 'Memory Storage Provider Error: InvalidTable is not a valid table.'
     
     # Then
-    invalid.table |> validator[['IsValidTable']]() |> expect.error(expected.error)
+    invalid.table |> validator[['TableExist']]() |> expect.error(expected.error)
+  })
+})
+
+describe("When id |> validate[['Identifier']]()",{
+  it('then no exception is thrown if id is a valid unique identifier',{
+    # Given
+    configuration <- data.frame()
+
+    broker <- configuration |> Memory.Storage.Broker()
+    validator <- broker |> Memory.Storage.Validator()
+
+    valid.id <- uuid::UUIDgenerate()
+    
+    # Then
+    valid.id |> validator[['Identifier']]() |> expect.no.error()
+  })
+  it('then an exception is thrown if id is an invalid identifier',{
+    # Given
+    configuration <- data.frame()
+
+    broker <- configuration |> Memory.Storage.Broker()
+    validator <- broker |> Memory.Storage.Validator()
+
+    invalid.id <- 'InvalidIdentifier'
+    
+    expected.error <- 'Memory Storage Provider Error: Invalid Unique Identifier.'
+    
+    # Then
+    invalid.id |> validator[['Identifier']]() |> expect.error(expected.error)
   })
 })

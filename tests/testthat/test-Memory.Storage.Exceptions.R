@@ -12,6 +12,13 @@ describe("When exceptions <- Memory.Storage.Exception()",{
     # Then
     exceptions |> expect.list()
   })
+  it('then exceptions contains InvalidDataType Exception',{
+   # When
+   exceptions <- Memory.Storage.Exceptions()
+   
+   # Then
+   exceptions[['InvalidDataType']] |> expect.exist()
+  })
   it('then exceptions contains NoExecuteQuery exception',{
    # When
    exceptions <- Memory.Storage.Exceptions()
@@ -40,9 +47,43 @@ describe("When exceptions <- Memory.Storage.Exception()",{
    # Then
    exceptions[['InvalidTable']] |> expect.exist()
   })
+  it('then exceptions contains InvalidIdentifier exception',{
+   # When
+   exceptions <- Memory.Storage.Exceptions()
+   
+   # Then
+   exceptions[['InvalidIdentifier']] |> expect.exist()
+  })
 })
 
-describe("When input |> exception[['NoExecuteQuery']]()", {
+describe("When input |> exception[['InvalidDataType']]()", {
+  it("then no exception is thrown if input is FALSE", {
+    # Given
+    exception <- Memory.Storage.Exceptions()
+    
+    # When
+    input <- FALSE
+    
+    # Then
+    input |> exception[['InvalidDataType']]() |> expect.no.error()
+  })
+  it("then an exception is thrown if input is TRUE", {
+    # Given
+    exception <- Memory.Storage.Exceptions()
+
+    field <- 'field'
+    type  <- 'type'
+    
+    expected.error <- "Memory Storage Provider Error: field is not a type."
+    # When
+    input <- TRUE
+    
+    # Then
+    input |> exception[['InvalidDataType']](field, type) |> expect.error(expected.error)
+  })
+})
+
+describe("When input |> exception[['NoExecuteQuery']](field, type)", {
   it("then no exception is thrown if input is FALSE", {
     # Given
     exception <- Memory.Storage.Exceptions()
@@ -139,5 +180,29 @@ describe("When input |> exception[['EntityNotFound']]()", {
     
     # Then
     input |> exception[['EntityNotFound']]() |> expect.error(expected.error)
+  })
+})
+
+describe("When input |> exception[['InvalidIdentifier']]()", {
+  it("then no exception is thrown if input is FALSE", {
+    # Given
+    exception <- Memory.Storage.Exceptions()
+    
+    # When
+    input <- FALSE
+    
+    # Then
+    input |> exception[['InvalidIdentifier']]() |> expect.no.error()
+  })
+  it("then an exception is thrown if input is TRUE", {
+    # Given
+    exception <- Memory.Storage.Exceptions()
+    
+    expected.error <- 'Memory Storage Provider Error: Invalid Unique Identifier.'
+    # When
+    input <- TRUE
+    
+    # Then
+    input |> exception[['InvalidIdentifier']]() |> expect.error(expected.error)
   })
 })

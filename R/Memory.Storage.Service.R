@@ -19,37 +19,55 @@ Memory.Storage.Service <- \(broker) {
   
   services <- list()
   services[['Seed']]          <- \(data, table) {
-    data |> broker[['Seed']](table)
+    data  |> validate[['Data']]()
+    table |> validate[['Table']]()
+
+    data  |> broker[['Seed']](table)
   }
   services[['ExecuteQuery']]  <- \(...) {
-    validate[['NoImplementation']]()
-    ... |> broker[['ExecuteQuery']]()
+    TRUE |> validate[['NoImplementation']]()
+    ...  |> broker[['ExecuteQuery']]()
   }
   services[['Insert']]        <- \(entity, table) {
-    table |> validate[['IsValidTable']]()
+    entity |> validate[['Entity']]()
+    table  |> validate[['Table']]()
 
+    table  |> validate[['TableExist']]()
     entity |> validate[['IsNewEntity']](table)
+
     entity |> broker[['Insert']](table)
   }
   services[['Select']]        <- \(table, fields) {
-    table |> validate[['IsValidTable']]()
+    table |> validate[['Table']]()
+
+    table |> validate[['TableExist']]()
+
     table |> broker[['Select']](fields)
   }
   services[['SelectWhereId']] <- \(id, table, fields) {
-    table |> validate[['IsValidTable']]()
+    id    |> validate[['Id']]()
+    table |> validate[['Table']]()
+
+    table |> validate[['TableExist']]()
 
     id |> broker[['SelectWhereId']](table, fields)
   }
   services[['Update']]        <- \(entity, table) {
-    table |> validate[['IsValidTable']]()
+    entity |> validate[['Entity']]()
+    table  |> validate[['Table']]()
+
+    table  |> validate[['TableExist']]()
 
     entity |> validate[['EntityExist']](table)
     entity |> broker[['Update']](table)
   }
   services[['Delete']]        <- \(id, table) {
-    table |> validate[['IsValidTable']]()
+    id    |> validate[['Id']]()
+    table |> validate[['Table']]()
+
+    table |> validate[['TableExist']]()
     
-    id |> broker[['Delete']](table)
+    id    |> broker[['Delete']](table)
   }
   return(services)
 }
