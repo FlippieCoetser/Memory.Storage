@@ -3,6 +3,7 @@ Memory.Storage.Validator <- \(broker = NULL) {
 
   validators <- list()
   validators[['Entity']]           <- \() {}
+  validators[['Table']]            <- \() {}
   validators[['NoImplementation']] <- \(throw) {
     throw |> exception[['NoExecuteQuery']]()
   }
